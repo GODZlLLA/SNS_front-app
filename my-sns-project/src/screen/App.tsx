@@ -1,24 +1,24 @@
 import { registerRootComponent } from 'expo';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 
-const App = () =>  {
+const App = () => {
   return (
     <View style={styles.container}>
       <Text>Open up App.tsx to start working on your app!</Text>
       <Button title='Click me' />
-      <ExpoStatusBar style="auto" />
+      <ExpoStatusBar style='auto' />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
-  },
+    justifyContent: 'center'
+  }
 });
 
-registerRootComponent(App)
+registerRootComponent(App);
