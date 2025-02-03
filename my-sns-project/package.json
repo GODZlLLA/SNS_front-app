@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/metro-runtime": "~4.0.1",
+    "@expo/vector-icons": "^14.0.4",
     "dprint": "^0.49.0",
     "expo": "~52.0.28",
     "expo-status-bar": "~2.0.1",

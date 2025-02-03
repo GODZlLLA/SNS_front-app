@@ -7,4 +7,7 @@
 		"editor.defaultFormatter": "dprint.dprint",
 		"editor.formatOnSave": true
 	},
+	"cSpell.words": [
+		"Pressable"
+	],
 }
