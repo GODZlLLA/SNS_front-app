@@ -7,13 +7,13 @@
     "importDeclaration.sortTypeOnlyImports": "first"
   },
   "includes": [
-    "src/**"
+    "**/src/**"
   ],
   "excludes": [
     "**/node_modules",
     "**/*-lock.json",
-    ".vscode/**",
-    ".gitlab/**",
+    "**/.vscode/**",
+    "**/.gitlab/**",
   ],
   "plugins": [
     "https://plugins.dprint.dev/typescript-0.93.3.wasm",
