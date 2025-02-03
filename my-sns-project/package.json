@@ -2,7 +2,7 @@
   "name": "my-sns-project",
   "license": "0BSD",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "src/screen/App.tsx",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",
