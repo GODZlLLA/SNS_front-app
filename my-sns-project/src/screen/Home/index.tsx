@@ -1,11 +1,18 @@
-import { useNav } from '@/hooks/useNav';
+import { RootStackParamList } from '@/types/navigation';
+import { RouteProp } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { FC } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 
-const HomeScreen: FC = () => {
-  const navigation = useNav();
+type HomeRouteProp = RouteProp<RootStackParamList, 'Home'>;
+type HomeNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
+type Props = {
+  navigation: HomeNavigationProp;
+  route: HomeRouteProp;
+};
 
+const HomeScreen: FC<Props> = ({ navigation, route }) => {
   return (
     <View style={styles.container}>
       <Button
