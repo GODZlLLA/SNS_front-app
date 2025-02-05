@@ -1,28 +1,34 @@
-import { Button } from '@/components/button';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants';
+import { RootStackParamList } from '@/types/navigation';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
 import { registerRootComponent } from 'expo';
-import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+
+// screen
+import HomeScreen from './Home';
+import DetailScreen from './Others';
+
+const Stack = createBottomTabNavigator<RootStackParamList>();
 
 const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <Text>Screen Width: {SCREEN_WIDTH} & Height: {SCREEN_HEIGHT}</Text>
-      <Button label='写真を選択' theme='primary' />
-      <Button label='この写真を使用' />
-      <ExpoStatusBar style='auto' />
-    </View>
+    <NavigationContainer>
+      <Stack.Navigator screenOptions={{ headerTitleAlign: 'center' }}>
+        <Stack.Group>
+          <Stack.Screen
+            name='Home'
+            component={HomeScreen}
+            options={{ headerShown: false, title: 'HOME' }}
+          />
+
+          <Stack.Screen
+            name='Detail'
+            component={DetailScreen}
+            options={{ headerShown: false, title: 'DETAIL' }}
+          />
+        </Stack.Group>
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 
 registerRootComponent(App);
