@@ -5,12 +5,11 @@
 
 export type SuperRootStackParamList = {
   RootTab: undefined;
-  Home: undefined;
-  Detail: undefined;
 };
 
 export type RootStackParamList = {
   AuthStack: undefined;
+  Home: undefined;
 };
 
 export type AuthStackParamList = {
@@ -18,4 +17,5 @@ export type AuthStackParamList = {
   Register: undefined;
   ForgotPassword: undefined;
   Welcome: undefined;
+  Profile: undefined;
 };

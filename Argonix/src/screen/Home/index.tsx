@@ -1,9 +1,10 @@
+import { useUserdata } from '@/hooks/useUserdata';
 import { RootStackParamList } from '@/types/navigation';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { StatusBar as ExpoStatusBar } from 'expo-status-bar';
 import { FC } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 type HomeRouteProp = RouteProp<RootStackParamList, 'Home'>;
 type HomeNavigationProp = StackNavigationProp<RootStackParamList, 'Home'>;
@@ -13,14 +14,30 @@ type Props = {
 };
 
 const HomeScreen: FC<Props> = ({ navigation, route }) => {
+  const userdata = useUserdata();
+  console.log(userdata);
+
   return (
     <View style={styles.container}>
-      <Button
-        title='Go to Details'
-        onPress={() => navigation.navigate('Detail')}
-      />
+      <Text style={styles.title}>ホーム画面</Text>
 
-      <Text>HOME Screen</Text>
+      {userdata && (
+        <View>
+          <Text style={styles.heading1}>ユーザーデータ</Text>
+          <Text>ユーザー名</Text>
+          <Text>{userdata.username}</Text>
+          <Text>メールアドレス</Text>
+          <Text>{userdata.email}</Text>
+          <Text>アバター画像</Text>
+          <Text>{userdata.avatar}</Text>
+          <Text>年齢</Text>
+          <Text>{userdata.age}</Text>
+          <Text>自己紹介</Text>
+          <Text>{userdata.bio}</Text>
+          <Text>アカウント作成日</Text>
+          <Text>{userdata.createdAt.toDate().toLocaleDateString()}</Text>
+        </View>
+      )}
 
       <ExpoStatusBar style='auto' />
     </View>
@@ -29,13 +46,15 @@ const HomeScreen: FC<Props> = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  scrollView: {
     flex: 1,
-    backgroundColor: 'pink',
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start',
+    padding: 20
+  },
+  title: {
+    fontSize: 30
+  },
+  heading1: {
+    fontSize: 24
   }
 });
 
