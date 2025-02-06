@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "my-sns-project",
-    "slug": "my-sns-project",
+    "name": "Argonix",
+    "slug": "Argonix",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
