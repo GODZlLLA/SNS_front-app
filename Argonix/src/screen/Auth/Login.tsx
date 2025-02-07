@@ -1,4 +1,5 @@
 import alert from '@/components/Alert';
+import Loading from '@/components/Loading';
 import { auth } from '@/constants/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { FC, useState } from 'react';
@@ -7,8 +8,11 @@ import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
 const Login: FC = () => {
   const [password, setPassword] = useState<string>('');
   const [email, seEmail] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
+    setLoading(true);
+
     if (!email) {
       alert('エラー', 'メールアドレスを入力してください');
       return;
@@ -24,10 +28,14 @@ const Login: FC = () => {
     } catch (error: any) {
       alert('エラー', 'ログイン失敗');
     }
+
+    setLoading(true);
   };
 
   return (
     <View style={styles.container}>
+      {loading && <Loading />}
+
       <Text style={styles.title}>ログイン</Text>
 
       <Text>メールアドレス</Text>
