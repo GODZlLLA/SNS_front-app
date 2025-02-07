@@ -7,5 +7,4 @@ export type Userdata = {
   avatar: string;
   age: string;
   createdAt: Timestamp;
-  isCompleatSetup: boolean;
 };

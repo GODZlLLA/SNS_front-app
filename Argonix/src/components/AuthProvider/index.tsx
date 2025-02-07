@@ -5,7 +5,6 @@ import React, { createContext, FC, ReactNode, useEffect, useState } from 'react'
 type AuthContextType = {
   user: User | null;
   loading: boolean;
-  isCompleatSetup: boolean;
 };
 
 type AuthProviderProps = {
@@ -14,21 +13,17 @@ type AuthProviderProps = {
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
-  loading: false,
-  isCompleatSetup: false
+  loading: true
 });
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
-  const [isCompleatSetup, setIsCompleatSetup] = useState<boolean>(false);
   const auth = getAuth();
-  const userdata = useUserdata();
 
   useEffect(() => {
     const subscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setIsCompleatSetup(userdata?.isCompleatSetup ? true : false);
       setLoading(false);
     });
 
@@ -36,7 +31,7 @@ const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading, isCompleatSetup }}>
+    <AuthContext.Provider value={{ user, loading }}>
       {children}
     </AuthContext.Provider>
   );

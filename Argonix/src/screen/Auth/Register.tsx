@@ -34,9 +34,6 @@ const Register: FC<RegisterProps> = ({ navigation }) => {
 
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-
-      // ユーザー登録完了でHomeへ遷移
-      navigation.navigate('Profile');
     } catch (error: any) {
       alert('登録エラー', error.message);
     }
@@ -64,9 +61,6 @@ const Register: FC<RegisterProps> = ({ navigation }) => {
         style={styles.input}
       />
       <Button title='登録' onPress={handleSignUp} />
-
-      <Text>既存ユーザーですか?</Text>
-      <Button title='ログイン' onPress={() => navigation.navigate('Login')} />
     </View>
   );
 };

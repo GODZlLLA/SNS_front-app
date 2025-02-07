@@ -9,6 +9,8 @@ const useUserdata = () => {
   const auth = getAuth();
 
   useEffect(() => {
+    if (!auth.currentUser) return;
+
     const userId = auth.currentUser?.uid;
 
     if (!userId) {
