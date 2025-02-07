@@ -1,10 +1,8 @@
-import { useUserdata } from '@/hooks/useUserdata';
 import { getAuth, onAuthStateChanged, User } from 'firebase/auth';
 import React, { createContext, FC, ReactNode, useEffect, useState } from 'react';
 
 type AuthContextType = {
   user: User | null;
-  loading: boolean;
 };
 
 type AuthProviderProps = {
@@ -12,26 +10,23 @@ type AuthProviderProps = {
 };
 
 const AuthContext = createContext<AuthContextType>({
-  user: null,
-  loading: true
+  user: null
 });
 
 const AuthProvider: FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
   const auth = getAuth();
 
   useEffect(() => {
     const subscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
-      setLoading(false);
     });
 
     return () => subscribe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, loading }}>
+    <AuthContext.Provider value={{ user }}>
       {children}
     </AuthContext.Provider>
   );
