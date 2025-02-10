@@ -1,9 +1,18 @@
 import alert from '@/components/Alert';
 import Loading from '@/components/Loading';
+import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants';
 import { auth } from '@/constants/firebaseConfig';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { FC, useState } from 'react';
-import { Button, StyleSheet, Text, TextInput, View } from 'react-native';
+import {
+  Button,
+  KeyboardAvoidingView,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View
+} from 'react-native';
 
 const Login: FC = () => {
   const [password, setPassword] = useState<string>('');
@@ -15,11 +24,13 @@ const Login: FC = () => {
 
     if (!email) {
       alert('エラー', 'メールアドレスを入力してください');
+      setLoading(false);
       return;
     }
 
     if (!password) {
       alert('エラー', 'パスワードを入力してください');
+      setLoading(false);
       return;
     }
 
@@ -27,49 +38,66 @@ const Login: FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
       alert('エラー', 'ログイン失敗');
+      setLoading(false);
     }
 
-    setLoading(true);
+    setLoading(false);
   };
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.safeArea}>
       {loading && <Loading />}
 
-      <Text style={styles.title}>ログイン</Text>
+      <KeyboardAvoidingView
+        behavior='height'
+        style={styles.KeyboardAvoidingView}
+      >
+        <View style={styles.container}>
+          <Text style={styles.title}>ログイン</Text>
 
-      <Text>メールアドレス</Text>
-      <TextInput
-        value={email}
-        onChangeText={seEmail}
-        placeholder='メールアドレス'
-        keyboardType='email-address'
-        autoCapitalize='none'
-        style={styles.input}
-      />
+          <Text>メールアドレス</Text>
+          <TextInput
+            value={email}
+            onChangeText={seEmail}
+            placeholder='メールアドレス'
+            keyboardType='email-address'
+            autoCapitalize='none'
+            style={styles.input}
+          />
 
-      <Text>パスワード</Text>
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        placeholder='password'
-        secureTextEntry
-        style={styles.input}
-      />
+          <Text>パスワード</Text>
+          <TextInput
+            value={password}
+            onChangeText={setPassword}
+            placeholder='password'
+            secureTextEntry
+            style={styles.input}
+          />
 
-      <Button
-        title='ログイン'
-        onPress={handleLogin}
-      />
-    </View>
+          <Button
+            title='ログイン'
+            onPress={handleLogin}
+          />
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    backgroundColor: '#fff',
+    width: SCREEN_WIDTH,
+    height: SCREEN_HEIGHT
+  },
+  KeyboardAvoidingView: {
+    width: '100%',
+    height: 'auto'
+  },
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20
+    padding: 20,
+    flex: 0,
+    justifyContent: 'center'
   },
   title: {
     fontSize: 30
