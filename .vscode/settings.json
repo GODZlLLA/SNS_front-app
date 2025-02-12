@@ -8,6 +8,8 @@
 		"editor.formatOnSave": true
 	},
 	"cSpell.words": [
+		"firestore",
 		"Pressable"
 	],
+	"dprint.path": null
 }

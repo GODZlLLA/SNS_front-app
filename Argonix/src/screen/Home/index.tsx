@@ -1,3 +1,4 @@
+import { auth } from '@/constants/firebaseConfig';
 import { RootStackParamList } from '@/types/navigation';
 import { RouteProp } from '@react-navigation/native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -13,14 +14,21 @@ type Props = {
 };
 
 const HomeScreen: FC<Props> = ({ navigation, route }) => {
+  const handleSignOut = () => {
+    auth.signOut();
+  };
+
   return (
     <View style={styles.container}>
-      <Button
-        title='Go to Details'
-        onPress={() => navigation.navigate('Detail')}
-      />
+      <Text style={styles.title}>ホーム画面</Text>
 
-      <Text>HOME Screen</Text>
+      <Text>メールアドレス</Text>
+      <Text>{auth.currentUser?.email}</Text>
+
+      <Button
+        title='サインアウト'
+        onPress={handleSignOut}
+      />
 
       <ExpoStatusBar style='auto' />
     </View>
@@ -29,13 +37,15 @@ const HomeScreen: FC<Props> = ({ navigation, route }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
-  },
-  scrollView: {
     flex: 1,
-    backgroundColor: 'pink',
-    alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'flex-start',
+    padding: 20
+  },
+  title: {
+    fontSize: 30
+  },
+  heading1: {
+    fontSize: 24
   }
 });
 
