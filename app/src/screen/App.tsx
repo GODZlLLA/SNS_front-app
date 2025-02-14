@@ -6,6 +6,7 @@ import { NotoSans_400Regular } from '@expo-google-fonts/noto-sans';
 import { NotoSansJP_400Regular } from '@expo-google-fonts/noto-sans-jp';
 import { registerRootComponent } from 'expo';
 import { useFonts } from 'expo-font';
+import { StatusBar } from 'react-native';
 
 const App = () => {
   // フォント設定
@@ -21,6 +22,8 @@ const App = () => {
 
   return (
     <AuthProvider>
+      <StatusBar barStyle={'default'} />
+
       <SuperRootStack />
     </AuthProvider>
   );

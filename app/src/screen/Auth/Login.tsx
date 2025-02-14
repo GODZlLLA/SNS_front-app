@@ -1,36 +1,39 @@
 import alert from '@/components/Alert';
-import Loading from '@/components/Loading';
-import { SCREEN_HEIGHT, SCREEN_WIDTH } from '@/constants';
+import Gradient from '@/components/Gradient';
 import { auth } from '@/constants/firebaseConfig';
+import { font, theme } from '@/theme';
+import { AuthStackParamList } from '@/types/navigation';
+import { AntDesign } from '@expo/vector-icons';
+import { StackNavigationProp } from '@react-navigation/stack';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { FC, useState } from 'react';
 import {
-  Button,
   KeyboardAvoidingView,
-  SafeAreaView,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
+  TouchableOpacity,
   View
 } from 'react-native';
 
-const Login: FC = () => {
+type LoginStackParamList = StackNavigationProp<AuthStackParamList, 'Login'>;
+type Props = {
+  navigation: LoginStackParamList;
+};
+
+const Login: FC<Props> = ({ navigation }) => {
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-  const [email, seEmail] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
 
   const handleLogin = async () => {
-    setLoading(true);
-
     if (!email) {
       alert('エラー', 'メールアドレスを入力してください');
-      setLoading(false);
       return;
     }
 
     if (!password) {
       alert('エラー', 'パスワードを入力してください');
-      setLoading(false);
       return;
     }
 
@@ -38,77 +41,83 @@ const Login: FC = () => {
       await signInWithEmailAndPassword(auth, email, password);
     } catch (error: any) {
       alert('エラー', 'ログイン失敗');
-      setLoading(false);
     }
-
-    setLoading(false);
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
-      {loading && <Loading />}
+    <Gradient>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
+        <AntDesign name='leftcircleo' size={30} color={theme.white} />
+      </TouchableOpacity>
+
+      <Text style={styles.title}>ログイン</Text>
 
       <KeyboardAvoidingView
-        behavior='height'
-        style={styles.KeyboardAvoidingView}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
-        <View style={styles.container}>
-          <Text style={styles.title}>ログイン</Text>
+        <View style={styles.formContainer}>
+          <View style={styles.fromGroup}>
+            <Text style={styles.label}>メールアドレス</Text>
+            <TextInput
+              value={email}
+              style={styles.input}
+              onChangeText={setEmail}
+              keyboardType='email-address'
+            />
+          </View>
 
-          <Text>メールアドレス</Text>
-          <TextInput
-            value={email}
-            onChangeText={seEmail}
-            placeholder='メールアドレス'
-            keyboardType='email-address'
-            autoCapitalize='none'
-            style={styles.input}
-          />
+          <View style={styles.fromGroup}>
+            <Text style={styles.label}>パスワード</Text>
+            <TextInput
+              value={password}
+              style={styles.input}
+              onChangeText={setPassword}
+              secureTextEntry
+            />
+          </View>
 
-          <Text>パスワード</Text>
-          <TextInput
-            value={password}
-            onChangeText={setPassword}
-            placeholder='password'
-            secureTextEntry
-            style={styles.input}
-          />
-
-          <Button
-            title='ログイン'
-            onPress={handleLogin}
-          />
+          <TouchableOpacity onPress={handleLogin} style={styles.goProfile}>
+            <AntDesign name='rightcircleo' size={30} color={theme.white} />
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </SafeAreaView>
+    </Gradient>
   );
 };
 
 const styles = StyleSheet.create({
-  safeArea: {
-    backgroundColor: '#fff',
-    width: SCREEN_WIDTH,
-    height: SCREEN_HEIGHT
-  },
-  KeyboardAvoidingView: {
-    width: '100%',
-    height: 'auto'
-  },
-  container: {
-    padding: 20,
-    flex: 0,
-    justifyContent: 'center'
-  },
   title: {
-    fontSize: 30
+    color: theme.white,
+    fontFamily: font.NotoSans,
+    fontSize: 24,
+    fontWeight: 'medium',
+    marginTop: 50
+  },
+  formContainer: {
+    marginTop: 20
+  },
+  fromGroup: {
+    marginTop: 10
+  },
+  label: {
+    fontSize: 16,
+    color: theme.white,
+    fontFamily: font.NotoSans
   },
   input: {
-    borderWidth: 1,
-    padding: 10,
-    marginVertical: 5
+    marginTop: 10,
+    color: theme.primary,
+    backgroundColor: theme.white,
+    borderRadius: 5,
+    minHeight: 50,
+    paddingLeft: 10,
+    paddingRight: 10,
+    fontSize: 20,
+    borderWidth: 0
   },
-  placeholder: {
-    color: '#333'
+  goProfile: {
+    marginTop: 30,
+    alignItems: 'flex-end'
   }
 });
 
