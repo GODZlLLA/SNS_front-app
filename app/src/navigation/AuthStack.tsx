@@ -16,8 +16,8 @@ const AuthStack: FC = () => {
 
   return (
     <Stack.Navigator screenOptions={navigationOptions}>
-      <Stack.Screen component={Login} name='Login' />
       <Stack.Screen component={Welcome} name='Welcome' />
+      <Stack.Screen component={Login} name='Login' />
       <Stack.Screen component={Register} name='Register' />
       <Stack.Screen component={ForgotPassword} name='ForgotPassword' />
     </Stack.Navigator>
