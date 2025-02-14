@@ -1,11 +1,10 @@
 import Gradient from '@/components/Gradient';
-import { SCREEN_WIDTH } from '@/constants';
-import { font, space, theme } from '@/theme';
+import { font, theme } from '@/theme';
 import { AuthStackParamList } from '@/types/navigation';
 import { Button } from '@react-native-material/core';
 import { StackNavigationProp } from '@react-navigation/stack';
 import React, { FC } from 'react';
-import { ImageBackground, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 type WelcomeStackParamList = StackNavigationProp<AuthStackParamList, 'Welcome'>;
 type WelcomeProps = {
@@ -16,6 +15,13 @@ const Welcome: FC<WelcomeProps> = ({ navigation }) => {
   return (
     <Gradient>
       <View style={styles.container}>
+        <View style={styles.logoContainer}>
+          <Image
+            style={styles.logo}
+            source={require('@/assets/icon.png')}
+          />
+        </View>
+
         <Text style={styles.title}>Argonixへようこそ</Text>
 
         <View style={styles.buttonContainer}>
@@ -47,15 +53,25 @@ const Welcome: FC<WelcomeProps> = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
+  },
+  logoContainer: {
+    marginTop: 60,
+    alignItems: 'center',
     justifyContent: 'center'
+  },
+  logo: {
+    width: 60,
+    height: 60,
+    borderRadius: '100%'
   },
   title: {
     color: theme.white,
     fontFamily: font.NotoSans,
     fontSize: 24,
     fontWeight: 'medium',
-    textAlign: 'center'
+    textAlign: 'center',
+    marginTop: 24
   },
   buttonContainer: {
     marginTop: 24
